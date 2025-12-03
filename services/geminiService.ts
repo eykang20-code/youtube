@@ -1,10 +1,11 @@
 import { GoogleGenAI, Type, Schema } from "@google/genai";
 import { ScriptAnalysisResult } from "../types";
 
-const apiKey = process.env.API_KEY;
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY || process.env.GEMINI_API_KEY;
 
-if (!apiKey) {
-  console.error("API_KEY is missing from environment variables.");
+if (!apiKey || apiKey === 'PLACEHOLDER_API_KEY') {
+  console.error("⚠️ GEMINI_API_KEY is missing or invalid. Please set it in .env.local file.");
+  console.error("Get your API key from: https://aistudio.google.com/app/apikey");
 }
 
 const ai = new GoogleGenAI({ apiKey: apiKey || 'DUMMY_KEY_FOR_BUILD' });
